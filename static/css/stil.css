@@ -1,0 +1,624 @@
+/* Mathecookie – Gestaltung nach Chris' Mockups und Mockup_Anpassungen.md (Unibrain) */
+
+:root {
+  --hintergrund-hell:  #FFE9C7;
+  --hintergrund-mitte: #FBD29C;
+  --hintergrund-rand:  #EFB572;
+  --strahl:            rgba(217, 134, 47, 0.38);
+  --flaeche:           #FFFAF2;
+  --eingabe:           #FFFDF9;
+  --rand:              #EBCFAA;
+  --rahmen-karamell:   #C98A3E;
+  --rahmen-dunkel:     #8A5521;
+  --schoko:            #5A3014;
+  --schoko-dunkel:     #3E1F0A;
+  --holz-rand:         #A86A2A;
+  --creme-text:        #FFEFD6;
+  --gold-text:         #F3C98A;
+  --text:              #3B2414;
+  --ueberschrift:      #4A2A12;
+  --text-leise:        #6B3A16;
+  --akzent:            #C46F1F;
+  --knopf:             #A65416;
+  --knopf-hover:       #8F4712;
+  --knopf-schatten:    #7A3C0E;
+  --balken:            #E8A04E;
+  --richtig: #1F6A24;  --richtig-bg: #E6F4E7;  --richtig-rand: #A9D6AC;
+  --falsch:  #A3261F;  --falsch-bg:  #FBE4E2;  --falsch-rand:  #C0392B;
+
+  --schrift-titel: "Fredoka", system-ui, sans-serif;
+  --schrift-text:  "Nunito", system-ui, sans-serif;
+  --schrift-schild: "Dancing Script", cursive;
+
+  /* 28 Strahlen: ein Strahl = 360/28 = 12,86°, die Hälfte davon farbig */
+  --strahlen: repeating-conic-gradient(from 0deg at 50% 50%, var(--strahl) 0deg 6.43deg, rgba(217, 134, 47, 0) 6.43deg 12.86deg);
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--schrift-text);
+  color: var(--text);
+  background: radial-gradient(circle at 50% 20%, var(--hintergrund-hell) 0%, var(--hintergrund-mitte) 45%, var(--hintergrund-rand) 100%) fixed;
+}
+
+h1, h2, h3 { font-family: var(--schrift-titel); margin: 0; color: var(--ueberschrift); }
+p { margin: 0; }
+
+/* Sonnenstrahlen von oben (Anmeldung + Hauptmenü) */
+body.strahlen {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 246, 230, 0.95) 0%, rgba(255, 246, 230, 0.55) 14%, rgba(255, 246, 230, 0) 34%),
+    repeating-conic-gradient(from 0deg at 50% 20%, var(--strahl) 0deg 6.43deg, rgba(217, 134, 47, 0) 6.43deg 12.86deg),
+    radial-gradient(circle at 50% 20%, var(--hintergrund-hell) 0%, var(--hintergrund-mitte) 45%, var(--hintergrund-rand) 100%);
+  background-attachment: fixed;
+}
+
+/* Spielseite: nur Verlauf, die Strahlen sitzen hinter dem Cookie */
+body.spiel-seite {
+  background: radial-gradient(circle at 30% 55%, var(--hintergrund-hell) 0%, var(--hintergrund-mitte) 45%, var(--hintergrund-rand) 100%) fixed;
+}
+
+.versteckt { display: none !important; }
+
+/* ---------------------------------------------------------------- Knöpfe und Felder */
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  min-height: 44px;
+}
+
+.knopf {
+  font-family: var(--schrift-titel);
+  font-weight: 600;
+  font-size: 1.15rem;
+  min-height: 48px;
+  padding: 0.6em 1.4em;
+  border-radius: 14px;
+  background: var(--knopf);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--knopf-schatten);
+  transition: transform 0.05s, box-shadow 0.05s, background 0.15s;
+}
+.knopf:hover:not(:disabled) { background: var(--knopf-hover); }
+.knopf:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--knopf-schatten); }
+.knopf:disabled { background: #D9B994; box-shadow: 0 4px 0 #B8936B; cursor: not-allowed; }
+
+.knopf-leise, .knopf-gefahr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-weight: 700;
+  padding: 0.5em 1.1em;
+  border-radius: 14px;
+  transition: background 0.15s;
+}
+.knopf-leise { background: #FFF4E4; color: #7A3C0E; border: 2px solid var(--akzent); }
+.knopf-leise:hover { background: #FDE7CA; }
+.knopf-gefahr { background: #FFF4F2; color: var(--falsch); border: 2px solid var(--falsch-rand); }
+.knopf-gefahr:hover { background: var(--falsch-bg); }
+.knopf-gefahr.voll { background: var(--falsch); color: #fff; }
+.knopf-leise svg, .knopf-gefahr svg { width: 1.15em; height: 1.15em; flex: none; }
+
+button:focus-visible, input:focus-visible { outline: 3px solid var(--akzent); outline-offset: 3px; }
+
+input {
+  font: inherit;
+  min-height: 48px;
+  padding: 0.6em 0.9em;
+  border: 2px solid var(--rand);
+  border-radius: 12px;
+  width: 100%;
+  background: var(--eingabe);
+  color: var(--text);
+}
+input:focus { outline: none; border-color: var(--akzent); box-shadow: 0 0 0 4px rgba(196, 111, 31, 0.18); }
+
+label { font-weight: 700; font-size: 0.95rem; color: var(--ueberschrift); }
+
+.meldung { font-weight: 700; }
+.meldung:empty { display: none; }
+.fehler, .falsch { color: var(--falsch); }
+.richtig { color: var(--richtig); }
+
+/* ---------------------------------------------------------------- Bausteine */
+
+/* Großes Schild / Karte */
+.schild-karte {
+  background: var(--flaeche);
+  border: 8px solid var(--rahmen-karamell);
+  outline: 2px solid var(--rahmen-dunkel);
+  border-radius: 30px;
+  box-shadow: 0 24px 50px rgba(122, 60, 14, 0.25);
+}
+
+/* Holz-/Schokoschild */
+.schoko-schild {
+  background: var(--schoko);
+  color: var(--creme-text);
+  border: 6px solid var(--holz-rand);
+  outline: 2px solid var(--schoko-dunkel);
+  border-radius: 24px;
+  box-shadow: 0 14px 30px rgba(74, 42, 18, 0.3);
+}
+.schoko-schild h2, .schoko-schild h3 { color: var(--creme-text); }
+
+.einfache-karte {
+  background: var(--flaeche);
+  border-radius: 22px;
+  padding: 1.6em;
+  box-shadow: 0 18px 40px rgba(122, 60, 14, 0.18);
+}
+
+.mathecookie { display: block; width: 100%; height: auto; }
+
+/* ---------------------------------------------------------------- Anmeldeseite */
+
+.anmeldung {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 2.5em 16px 3em;
+  text-align: center;
+}
+.anmeldung .logo { width: 128px; filter: drop-shadow(0 8px 12px rgba(122, 60, 14, 0.3)); }
+.anmeldung h1 { font-size: clamp(2.6rem, 9vw, 4rem); font-weight: 700; margin-top: 0.15em; }
+.anmeldung .slogan { margin-top: 0.3em; font-size: 1.15rem; color: var(--text-leise); font-weight: 600; }
+.anmeldung .formulare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.8em;
+  margin-top: 2.2em;
+  align-items: start;
+  text-align: left;
+}
+.anmeldung form { display: flex; flex-direction: column; gap: 0.55em; }
+.anmeldung form h2 { font-size: 1.7rem; font-weight: 600; margin-bottom: 0.3em; }
+.anmeldung form button { margin-top: 0.7em; }
+.hinweis { font-size: 0.9rem; color: var(--text-leise); }
+
+/* ---------------------------------------------------------------- Hauptmenü */
+
+.hauptmenue {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.haengeschild { display: flex; flex-direction: column; align-items: center; }
+.seile { display: flex; gap: 220px; }
+.seile span { width: 4px; height: 34px; background: #7A4A22; border-radius: 2px; }
+.haengeschild .schoko-schild {
+  position: relative;
+  padding: 0.1em 1.4em 0.3em;
+  margin-top: -2px;
+}
+.haengeschild h1 {
+  font-family: var(--schrift-schild);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  line-height: 1.25;
+  color: var(--creme-text);
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+}
+.nagel {
+  position: absolute;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #F6C47E, #C47F34);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+.nagel.links { left: 12px; }
+.nagel.rechts { right: 12px; }
+
+.menue-karte { width: 100%; margin-top: 1.6em; padding: 1.6em 1.8em 1.4em; text-align: center; }
+
+#begruessung {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8em;
+  flex-wrap: wrap;
+}
+#begruessung h2 { font-size: 1.9rem; font-weight: 600; }
+
+.rang-pille {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 0.95em;
+  border-radius: 999px;
+  background: var(--schoko);
+  color: var(--creme-text);
+  border: 3px solid var(--holz-rand);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.rang-pille svg { width: 1em; height: 1em; flex: none; }
+
+.zum-spiel {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.2em auto 0;
+  border-radius: 20px;
+}
+.zum-spiel .cookie-rahmen { position: relative; width: min(300px, 70vw); }
+.zum-spiel .mathecookie { filter: drop-shadow(0 12px 16px rgba(122, 60, 14, 0.3)); transition: transform 0.15s; }
+.zum-spiel:hover .mathecookie { transform: scale(1.04) rotate(-3deg); }
+.zum-spiel:active .mathecookie { transform: scale(0.97); }
+.zum-spiel:focus-visible { outline: 3px solid var(--akzent); outline-offset: 6px; }
+.zum-spiel .zeiger { position: absolute; right: 2%; bottom: 6%; width: 22%; pointer-events: none; }
+.zum-spiel .zum-text {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 7vw, 2.5rem);
+  color: #7A3C0E;
+  margin-top: 0.35em;
+}
+
+.menue-unten {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  margin-top: 1.3em;
+  padding-top: 1.2em;
+  border-top: 2px dashed var(--rand);
+  flex-wrap: wrap;
+}
+#meldung { margin-top: 0.8em; color: var(--richtig); }
+
+dialog {
+  border: none;
+  border-radius: 22px;
+  padding: 1.6em;
+  max-width: 420px;
+  width: calc(100% - 32px);
+  background: var(--flaeche);
+  color: var(--text);
+  outline: 2px solid var(--rahmen-dunkel);
+  border: 6px solid var(--rahmen-karamell);
+}
+dialog::backdrop { background: rgba(62, 31, 10, 0.45); }
+dialog h2 { font-size: 1.5rem; font-weight: 600; }
+dialog p { margin-top: 0.6em; }
+dialog .knoepfe { display: flex; gap: 0.8em; justify-content: flex-end; margin-top: 1.3em; flex-wrap: wrap; }
+
+/* ---------------------------------------------------------------- Cookie-Klickseite */
+
+.spiel { max-width: 1080px; margin: 0 auto; padding: 1.4em 16px 2.5em; }
+
+/* Anzeigetafel */
+.anzeigetafel {
+  margin-top: 1.2em;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em 1.6em;
+  row-gap: 0.8em;
+}
+.anzeigetafel > div { padding: 0.2em 1.6em; }
+.anzeigetafel > div:first-child { padding-left: 0.2em; flex: 1.4 1 200px; }
+.anzeigetafel > .pro-klick { flex: 1 1 150px; border-left: 2px solid rgba(243, 201, 138, 0.35); }
+.anzeigetafel > .rang-bereich { flex: 1.8 1 280px; border-left: 2px solid rgba(243, 201, 138, 0.35); }
+.etikett {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+.wert-gross { font-family: var(--schrift-titel); font-weight: 700; font-size: clamp(2.6rem, 7vw, 3.5rem); line-height: 1.05; color: var(--creme-text); }
+.wert-mittel { font-family: var(--schrift-titel); font-weight: 700; font-size: 2.5rem; line-height: 1.1; color: var(--creme-text); }
+.rang-kopf { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
+.rang-kopf #rang { font-family: var(--schrift-titel); font-weight: 700; font-size: 1.75rem; color: var(--creme-text); text-align: right; }
+.rang-spur {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--schoko-dunkel);
+  margin: 0.45em 0 0.45em;
+  overflow: hidden;
+}
+#rang-balken { height: 100%; width: 0; border-radius: 999px; background: var(--balken); transition: width 0.3s; }
+#naechster-rang { font-size: 0.95rem; color: #F3D7AE; font-weight: 600; }
+
+/* Spielfeld */
+.spielfeld {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  gap: 2em;
+  align-items: center;
+  margin-top: 1.4em;
+}
+
+.cookie-bereich {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 440px;
+}
+.cookie-strahlen {
+  position: absolute;
+  width: 640px;
+  height: 640px;
+  max-width: 150%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--strahlen);
+  -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 70%);
+  mask-image: radial-gradient(circle, #000 25%, transparent 70%);
+  pointer-events: none;
+}
+.cookie-schein {
+  position: absolute;
+  width: 420px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 246, 230, 0.9) 0%, rgba(255, 246, 230, 0) 70%);
+  pointer-events: none;
+}
+#cookie {
+  all: unset;
+  position: relative;
+  width: min(380px, 80vw);
+  cursor: pointer;
+  border-radius: 50%;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 14px 18px rgba(122, 60, 14, 0.3));
+  transition: transform 0.07s;
+}
+#cookie:hover { transform: scale(1.02); }
+#cookie.gedrueckt { transform: scale(0.96); }
+#cookie:focus-visible { outline: 3px solid var(--akzent); outline-offset: 8px; }
+
+.plus {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 30px;
+  color: #7A3C0E;
+  text-shadow: 0 2px 0 #FFF4E4, 0 0 10px rgba(255, 244, 228, 0.9);
+  animation: hochschweben 0.8s ease-out forwards;
+  z-index: 2;
+}
+@keyframes hochschweben {
+  from { opacity: 1; transform: translate(-50%, -50%); }
+  to { opacity: 0; transform: translate(-50%, -150%); }
+}
+
+/* Aufgabenkarte */
+.aufgaben-bereich { display: flex; flex-direction: column; gap: 0.9em; }
+.aufgabenkarte { position: relative; padding: 2.3em 1.6em 1.6em; text-align: center; margin-top: 1em; }
+.reiter {
+  position: absolute;
+  top: -1.25em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--schoko);
+  color: var(--creme-text);
+  border: 3px solid var(--holz-rand);
+  outline: 2px solid var(--schoko-dunkel);
+  border-radius: 12px;
+  padding: 0.2em 1.1em;
+  font-family: var(--schrift-titel);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ansicht { display: flex; flex-direction: column; align-items: stretch; gap: 0.9em; }
+.ansicht h2 { font-size: 2rem; font-weight: 600; }
+#aufgabe-text { font-family: var(--schrift-titel); font-weight: 700; font-size: clamp(2.2rem, 7vw, 4rem); line-height: 1.1; color: var(--ueberschrift); word-break: break-word; }
+.plakette {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45em 1em;
+  border-radius: 999px;
+  background: var(--richtig-bg);
+  border: 2px solid var(--richtig-rand);
+  color: var(--richtig);
+  font-weight: 700;
+}
+.plakette svg { width: 1em; height: 1em; flex: none; }
+.preis-pille {
+  align-self: center;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  padding: 0.45em 1.3em;
+  border-radius: 999px;
+  background: #FBE6CC;
+  border: 2px solid var(--rand);
+  font-weight: 700;
+  color: var(--text-leise);
+}
+.preis-pille strong { font-family: var(--schrift-titel); font-size: 1.7rem; color: #7A3C0E; }
+.antwortzeile { display: flex; gap: 0.6em; }
+.antwortzeile input { font-size: 1.25rem; text-align: center; }
+
+#feedback {
+  margin-bottom: 0.9em;
+  padding: 0.6em 1em;
+  border-radius: 14px;
+  border: 2px solid;
+  font-weight: 700;
+}
+#feedback:empty { display: none; }
+#feedback.richtig { background: var(--richtig-bg); color: var(--richtig); border-color: var(--richtig-rand); }
+#feedback.falsch { background: var(--falsch-bg); color: var(--falsch); border-color: var(--falsch-rand); }
+
+.stufe-info { text-align: center; font-weight: 700; color: var(--text-leise); }
+
+/* Infotafel */
+#infotafel { margin-top: 2em; padding: 1.3em 1.8em 1.5em; }
+.infotafel-kopf { display: flex; justify-content: space-between; align-items: center; gap: 1em; }
+.infotafel-kopf h2 { font-size: 1.45rem; font-weight: 600; display: flex; align-items: center; gap: 0.5em; }
+.infotafel-kopf h2 svg { width: 0.95em; height: 0.95em; flex: none; }
+.punkte { display: flex; gap: 0.2em; }
+.punkte button {
+  all: unset;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+}
+.punkte button::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(243, 201, 138, 0.35);
+}
+.punkte button.aktiv::before { background: var(--balken); }
+.punkte button:focus-visible { outline: 2px solid var(--creme-text); border-radius: 50%; }
+#infotafel-inhalt { margin-top: 1.1em; }
+.schritte { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4em; }
+.schritt { display: flex; gap: 0.85em; align-items: flex-start; }
+.schritt .nummer {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--balken);
+  color: var(--schoko-dunkel);
+  display: grid;
+  place-items: center;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.schritt h3 { font-size: 1.25rem; font-weight: 600; }
+.schritt p { margin-top: 0.25em; color: #F3D7AE; font-size: 0.95rem; line-height: 1.45; }
+
+/* ---------------------------------------------------------------- Schmale Bildschirme */
+
+@media (max-width: 760px) {
+  .anzeigetafel > div { padding: 0.2em 0.6em; }
+  .anzeigetafel > div:first-child { flex: 1 1 120px; }
+  .anzeigetafel > .pro-klick { flex: 1 1 100px; }
+  .anzeigetafel > .rang-bereich { border-left: none; border-top: 2px solid rgba(243, 201, 138, 0.35); padding-top: 0.7em; }
+  .menue-unten { justify-content: center; }
+  .seile { gap: 160px; }
+  .cookie-bereich { min-height: 340px; }
+  .schild-karte { border-width: 6px; border-radius: 24px; }
+}
+
+/* Easteregg: Hinweis auf der Infotafel beim höchsten Rang */
+.erleuchtung-text {
+  margin: 0.4em 0 0;
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Easteregg: goldener Cookie (Hauptmenü + Klickseite) und Fenster
+   "Cookie der Erleuchtung". Aktiv, sobald body die Klasse "golden" hat.
+   ========================================================================== */
+body.golden #mc-teig stop:nth-child(1) { stop-color: #FFF0A8; }
+body.golden #mc-teig stop:nth-child(2) { stop-color: #F2C744; }
+body.golden #mc-teig stop:nth-child(3) { stop-color: #C8901A; }
+body.golden .mathecookie > path { stroke: #8A5E12; }
+body.golden #cookie,
+body.golden .zum-spiel .mathecookie { filter: drop-shadow(0 0 22px rgba(255, 214, 90, 0.75)) drop-shadow(0 12px 16px rgba(122, 60, 14, 0.25)); }
+
+.erleuchtung-fenster {
+  width: min(620px, calc(100vw - 32px));
+  padding: 2em 2em 2.2em;
+  border: 5px solid #F2C744;
+  border-radius: 28px;
+  background: #3E1F0A;
+  color: #FFEFD6;
+  text-align: center;
+  box-shadow: 0 0 0 10px rgba(242, 199, 68, 0.18), 0 0 60px rgba(255, 210, 80, 0.55);
+  overflow: hidden;
+}
+.erleuchtung-fenster::backdrop {
+  background: rgba(90, 48, 20, 0.6);
+  backdrop-filter: blur(4px);
+}
+.erleuchtung-fenster[open] { animation: erleuchtung-auf 0.45s ease-out; }
+@keyframes erleuchtung-auf {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.erleuchtung-fenster h2 {
+  font-size: 2.6em;
+  color: #FFD34D;
+  text-shadow: 0 0 18px rgba(255, 211, 77, 0.6);
+}
+.erleuchtung-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #F2C744;
+  background: transparent;
+  color: #FFEFD6;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.erleuchtung-x:hover { background: rgba(242, 199, 68, 0.15); }
+.erleuchtung-bild {
+  position: relative;
+  width: min(380px, 80%);
+  margin: 0.4em auto 0.6em;
+  aspect-ratio: 1;
+}
+.erleuchtung-bild svg { position: relative; width: 100%; height: 100%; }
+.erleuchtung-strahlen {
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg at 50% 57%, rgba(255, 214, 90, 0.55) 0deg 5deg, rgba(255, 214, 90, 0) 5deg 15deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 57%, #000 20%, transparent 65%);
+  mask-image: radial-gradient(circle at 50% 57%, #000 20%, transparent 65%);
+  animation: strahlen-drehen 30s linear infinite;
+}
+@keyframes strahlen-drehen { to { transform: rotate(360deg); } }
+.heiligenschein {
+  fill: none;
+  stroke: #FFD34D;
+  stroke-width: 7;
+  filter: drop-shadow(0 0 6px rgba(255, 220, 100, 0.9));
+}
+.erleuchtung-satz {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.7em;
+  color: #FFF4E4;
+}
+.erleuchtung-zusatz { margin-top: 0.5em; font-size: 1.15em; }
+.erleuchtung-knopf {
+  margin-top: 1.4em;
+  padding: 0.55em 1.8em;
+  border: 0;
+  border-radius: 14px;
+  background: #F2C744;
+  color: #3E1F0A;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.3em;
+  box-shadow: 0 5px 0 #B8860B;
+  cursor: pointer;
+}
+.erleuchtung-knopf:hover { background: #FFD65C; }
+.erleuchtung-knopf:active { transform: translateY(3px); box-shadow: 0 2px 0 #B8860B; }

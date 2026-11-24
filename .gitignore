@@ -1,0 +1,30 @@
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets / lokale Konfiguration
+.env
+.env.*
+*.pem
+*.key
+secrets*
+
+# Lokale Datenbank-Daten (MongoDB)
+daten/
+*.log
+
+# Lokaler Clone des GitHub-Repos (nicht mitversionieren)
+Mathe-Cookieklicker/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

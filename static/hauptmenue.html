@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mathecookie – Hauptmenü</title>
+  <link rel="icon" href="/static/bilder/cookie.svg">
+  <link rel="stylesheet" href="/static/css/schriften.css">
+  <link rel="stylesheet" href="/static/css/stil.css">
+</head>
+<body class="strahlen">
+  <main class="hauptmenue">
+    <div class="haengeschild">
+      <div class="seile"><span></span><span></span></div>
+      <div class="schoko-schild">
+        <span class="nagel links"></span><span class="nagel rechts"></span>
+        <h1>Hauptmenü</h1>
+      </div>
+    </div>
+
+    <section class="schild-karte menue-karte">
+      <div id="begruessung">
+        <h2>Hallo <span id="benutzername"></span>!</h2>
+        <span class="rang-pille"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><span>Rang: <span id="rang">–</span></span></span>
+      </div>
+
+      <button id="zum-spiel" class="zum-spiel" type="button">
+        <span class="cookie-rahmen">
+          <svg class="mathecookie" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="mc-teig" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#e8b36a"/>
+      <stop offset="70%" stop-color="#c98a3e"/>
+      <stop offset="100%" stop-color="#a86a2a"/>
+    </radialGradient>
+  </defs>
+  <path d="M100 8 C150 6 192 44 192 98 C194 150 152 192 100 192 C46 194 8 152 8 100 C6 50 48 10 100 8 Z" fill="url(#mc-teig)" stroke="#8a5521" stroke-width="4"/>
+  <g fill="#4a2a12">
+    <rect x="40" y="62" width="12" height="4" rx="2" transform="rotate(-30 46 64)"/>
+    <rect x="70" y="36" width="12" height="4" rx="2" transform="rotate(20 76 38)"/>
+    <rect x="138" y="40" width="12" height="4" rx="2" transform="rotate(-50 144 42)"/>
+    <rect x="160" y="78" width="12" height="4" rx="2" transform="rotate(35 166 80)"/>
+    <rect x="112" y="92" width="12" height="4" rx="2" transform="rotate(-15 118 94)"/>
+    <rect x="30" y="104" width="12" height="4" rx="2" transform="rotate(60 36 106)"/>
+    <rect x="74" y="122" width="12" height="4" rx="2" transform="rotate(-40 80 124)"/>
+    <rect x="150" y="128" width="12" height="4" rx="2" transform="rotate(10 156 130)"/>
+    <rect x="96" y="166" width="12" height="4" rx="2" transform="rotate(45 102 168)"/>
+    <rect x="56" y="160" width="12" height="4" rx="2" transform="rotate(-10 62 162)"/>
+    <rect x="128" y="168" width="12" height="4" rx="2" transform="rotate(-60 134 170)"/>
+    <rect x="92" y="58" width="10" height="4" rx="2" transform="rotate(70 97 60)"/>
+  </g>
+  <g fill="#f3c98a" opacity="0.55">
+    <rect x="52" y="84" width="10" height="4" rx="2" transform="rotate(25 57 86)"/>
+    <rect x="132" y="112" width="10" height="4" rx="2" transform="rotate(-35 137 114)"/>
+    <rect x="118" y="60" width="10" height="4" rx="2" transform="rotate(50 123 62)"/>
+  </g>
+  <g font-family="Fredoka, 'Arial Rounded MT Bold', Arial, sans-serif" font-weight="700" text-anchor="middle" fill="#4a2a12">
+    <text x="62" y="60" font-size="30" transform="rotate(-14 62 60)">6</text>
+    <text x="124" y="66" font-size="28" transform="rotate(12 124 66)">7</text>
+    <text x="156" y="116" font-size="30" transform="rotate(16 156 116)">9</text>
+    <text x="88" y="108" font-size="32" transform="rotate(-8 88 108)">1</text>
+    <text x="56" y="148" font-size="28" transform="rotate(10 56 148)">4</text>
+    <text x="122" y="158" font-size="30" transform="rotate(-16 122 158)">0</text>
+    <text x="146" y="44" font-size="28" transform="rotate(18 146 44)">+</text>
+    <text x="36" y="96" font-size="28" transform="rotate(-22 36 96)">−</text>
+    <text x="124" y="120" font-size="26" transform="rotate(-8 124 120)">+</text>
+    <text x="162" y="152" font-size="26" transform="rotate(28 162 152)">−</text>
+    <text x="84" y="178" font-size="26" transform="rotate(6 84 178)">+</text>
+    <text x="96" y="42" font-size="24" transform="rotate(-14 96 42)">−</text>
+  </g>
+</svg>
+          <svg class="zeiger" viewBox="0 0 64 64" aria-hidden="true">
+            <g stroke="#FFF4E4" stroke-width="3.5" stroke-linecap="round"><path d="M14 10l-4-5"/><path d="M8 18l-6-1"/><path d="M22 7l1-6"/></g>
+            <path d="M16 14l30 13-12 4 9 15-6 3-9-15-9 9z" fill="#fff" stroke="#2b1608" stroke-width="3" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="zum-text">Zum Mathecookie</span>
+      </button>
+
+      <div class="menue-unten">
+        <button id="abmelden" class="knopf-leise" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5"/><path d="M14 8l4 4-4 4"/><path d="M18 12H9"/></svg>Abmelden</button>
+        <button id="zuruecksetzen" class="knopf-gefahr" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Spielstand zurücksetzen</button>
+      </div>
+      <p id="meldung" class="meldung" role="status"></p>
+    </section>
+  </main>
+
+  <dialog id="bestaetigung">
+    <h2>Wirklich zurücksetzen?</h2>
+    <p>Cookies, Cookies pro Klick, Rang und gelöste Aufgaben gehen verloren. Dein Konto bleibt bestehen.</p>
+    <div class="knoepfe">
+      <button id="abbrechen" class="knopf-leise" type="button">Abbrechen</button>
+      <button id="ja-zuruecksetzen" class="knopf-gefahr voll" type="button">Ja, zurücksetzen</button>
+    </div>
+  </dialog>
+
+  <script src="/static/js/gemeinsam.js"></script>
+  <script src="/static/js/hauptmenue.js"></script>
+</body>
+</html>

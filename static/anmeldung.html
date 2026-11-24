@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mathecookie – Anmelden</title>
+  <link rel="icon" href="/static/bilder/cookie.svg">
+  <link rel="stylesheet" href="/static/css/schriften.css">
+  <link rel="stylesheet" href="/static/css/stil.css">
+</head>
+<body class="strahlen">
+  <main class="anmeldung">
+    <img class="logo" src="/static/bilder/cookie.svg" alt="">
+    <h1>Mathecookie</h1>
+    <p class="slogan">Klick dich reich und rechne dich schneller.</p>
+
+    <div class="formulare">
+      <form id="form-anmelden" class="einfache-karte">
+        <h2>Anmelden</h2>
+        <label for="anmelden-name">Benutzername</label>
+        <input id="anmelden-name" autocomplete="username" required>
+        <label for="anmelden-passwort">Passwort</label>
+        <input id="anmelden-passwort" type="password" autocomplete="current-password" required>
+        <button type="submit" class="knopf">Anmelden</button>
+        <p id="anmelden-meldung" class="meldung fehler" role="alert"></p>
+      </form>
+
+      <form id="form-registrieren" class="einfache-karte">
+        <h2>Neu registrieren</h2>
+        <label for="reg-name">Benutzername (frei ausdenken)</label>
+        <input id="reg-name" autocomplete="username" required>
+        <label for="reg-passwort">Passwort</label>
+        <input id="reg-passwort" type="password" autocomplete="new-password" required>
+        <label for="reg-bestaetigen">Passwort bestätigen</label>
+        <input id="reg-bestaetigen" type="password" autocomplete="new-password" required>
+        <p id="passwortregel" class="hinweis"></p>
+        <button type="submit" class="knopf-leise">Registrieren</button>
+        <p id="reg-meldung" class="meldung fehler" role="alert"></p>
+      </form>
+    </div>
+  </main>
+  <script src="/static/js/gemeinsam.js"></script>
+  <script src="/static/js/anmeldung.js"></script>
+</body>
+</html>

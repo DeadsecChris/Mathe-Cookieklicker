@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mathecookie</title>
+  <link rel="icon" href="/static/bilder/cookie.svg">
+  <link rel="stylesheet" href="/static/css/schriften.css">
+  <link rel="stylesheet" href="/static/css/stil.css">
+</head>
+<body class="spiel-seite">
+  <main class="spiel">
+    <button id="zurueck" class="knopf-leise" type="button">← Hauptmenü</button>
+
+    <header class="anzeigetafel schoko-schild">
+      <div>
+        <div class="etikett">Cookies</div>
+        <div class="wert-gross" id="cookies">–</div>
+      </div>
+      <div class="pro-klick">
+        <div class="etikett">Pro Klick</div>
+        <div class="wert-mittel">+<span id="pro-klick">–</span></div>
+      </div>
+      <div class="rang-bereich">
+        <div class="rang-kopf">
+          <span class="etikett">Rang</span>
+          <span id="rang">–</span>
+        </div>
+        <div class="rang-spur" role="progressbar" aria-label="Fortschritt bis zum nächsten Rang" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="rang-balken"></div></div>
+        <div id="naechster-rang"></div>
+      </div>
+    </header>
+
+    <section class="spielfeld">
+      <div class="cookie-bereich" id="cookie-bereich">
+        <div class="cookie-strahlen"></div>
+        <div class="cookie-schein"></div>
+        <button id="cookie" type="button" aria-label="Cookie klicken">
+          <svg class="mathecookie" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="mc-teig" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#e8b36a"/>
+      <stop offset="70%" stop-color="#c98a3e"/>
+      <stop offset="100%" stop-color="#a86a2a"/>
+    </radialGradient>
+  </defs>
+  <path d="M100 8 C150 6 192 44 192 98 C194 150 152 192 100 192 C46 194 8 152 8 100 C6 50 48 10 100 8 Z" fill="url(#mc-teig)" stroke="#8a5521" stroke-width="4"/>
+  <g fill="#4a2a12">
+    <rect x="40" y="62" width="12" height="4" rx="2" transform="rotate(-30 46 64)"/>
+    <rect x="70" y="36" width="12" height="4" rx="2" transform="rotate(20 76 38)"/>
+    <rect x="138" y="40" width="12" height="4" rx="2" transform="rotate(-50 144 42)"/>
+    <rect x="160" y="78" width="12" height="4" rx="2" transform="rotate(35 166 80)"/>
+    <rect x="112" y="92" width="12" height="4" rx="2" transform="rotate(-15 118 94)"/>
+    <rect x="30" y="104" width="12" height="4" rx="2" transform="rotate(60 36 106)"/>
+    <rect x="74" y="122" width="12" height="4" rx="2" transform="rotate(-40 80 124)"/>
+    <rect x="150" y="128" width="12" height="4" rx="2" transform="rotate(10 156 130)"/>
+    <rect x="96" y="166" width="12" height="4" rx="2" transform="rotate(45 102 168)"/>
+    <rect x="56" y="160" width="12" height="4" rx="2" transform="rotate(-10 62 162)"/>
+    <rect x="128" y="168" width="12" height="4" rx="2" transform="rotate(-60 134 170)"/>
+    <rect x="92" y="58" width="10" height="4" rx="2" transform="rotate(70 97 60)"/>
+  </g>
+  <g fill="#f3c98a" opacity="0.55">
+    <rect x="52" y="84" width="10" height="4" rx="2" transform="rotate(25 57 86)"/>
+    <rect x="132" y="112" width="10" height="4" rx="2" transform="rotate(-35 137 114)"/>
+    <rect x="118" y="60" width="10" height="4" rx="2" transform="rotate(50 123 62)"/>
+  </g>
+  <g font-family="Fredoka, 'Arial Rounded MT Bold', Arial, sans-serif" font-weight="700" text-anchor="middle" fill="#4a2a12">
+    <text x="62" y="60" font-size="30" transform="rotate(-14 62 60)">6</text>
+    <text x="124" y="66" font-size="28" transform="rotate(12 124 66)">7</text>
+    <text x="156" y="116" font-size="30" transform="rotate(16 156 116)">9</text>
+    <text x="88" y="108" font-size="32" transform="rotate(-8 88 108)">1</text>
+    <text x="56" y="148" font-size="28" transform="rotate(10 56 148)">4</text>
+    <text x="122" y="158" font-size="30" transform="rotate(-16 122 158)">0</text>
+    <text x="146" y="44" font-size="28" transform="rotate(18 146 44)">+</text>
+    <text x="36" y="96" font-size="28" transform="rotate(-22 36 96)">−</text>
+    <text x="124" y="120" font-size="26" transform="rotate(-8 124 120)">+</text>
+    <text x="162" y="152" font-size="26" transform="rotate(28 162 152)">−</text>
+    <text x="84" y="178" font-size="26" transform="rotate(6 84 178)">+</text>
+    <text x="96" y="42" font-size="24" transform="rotate(-14 96 42)">−</text>
+  </g>
+</svg>
+        </button>
+      </div>
+
+      <div class="aufgaben-bereich">
+        <div class="aufgabenkarte schild-karte">
+          <span class="reiter">Rechenaufgabe</span>
+
+          <p id="feedback" role="status"></p>
+
+          <!-- Ansicht Kaufen -->
+          <div id="ansicht-kaufen" class="ansicht">
+            <h2>Neue Aufgabe kaufen</h2>
+            <p class="plakette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg><span>Nächste richtige Aufgabe: +<span class="naechster-zuwachs" id="naechster-zuwachs">–</span> Cookies pro Klick</span></p>
+            <p class="preis-pille">Preis <strong id="preis">–</strong> Cookies</p>
+            <button id="kaufen" class="knopf" type="button">Kaufen</button>
+          </div>
+
+          <!-- Ansicht Aufgabe -->
+          <div id="ansicht-aufgabe" class="ansicht versteckt">
+            <div id="aufgabe-text"></div>
+            <form id="antwort-form" class="antwortzeile">
+              <input id="antwort" autocomplete="off" inputmode="decimal" placeholder="Ergebnis" aria-label="Ergebnis">
+              <button type="submit" class="knopf">Prüfen</button>
+            </form>
+            <p class="plakette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg><span>Richtig gelöst: +<span class="naechster-zuwachs">–</span> Cookies pro Klick</span></p>
+          </div>
+        </div>
+        <p class="stufe-info">Stufe <span id="stufe">–</span> · <span id="geloest">–</span> Aufgaben richtig gelöst</p>
+      </div>
+    </section>
+
+    <aside id="infotafel" class="schoko-schild" aria-labelledby="infotafel-titel">
+      <div class="infotafel-kopf">
+        <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.01"/></svg><span id="infotafel-titel">So funktioniert Mathecookie</span></h2>
+        <div class="punkte" id="infotafel-punkte" aria-label="Inhalte der Infotafel"></div>
+      </div>
+      <div id="infotafel-inhalt"></div>
+    </aside>
+  </main>
+
+  <!-- Easteregg: Fenster "Cookie der Erleuchtung" (öffnet sich nach dem Code auf dem Cookie) -->
+  <dialog id="erleuchtung-fenster" class="erleuchtung-fenster" aria-labelledby="erleuchtung-titel">
+    <button id="erleuchtung-schliessen" class="erleuchtung-x" type="button" aria-label="Schließen">✕</button>
+    <h2 id="erleuchtung-titel">Glückwunsch!</h2>
+    <div class="erleuchtung-bild">
+      <div class="erleuchtung-strahlen"></div>
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="gold-teig" cx="38%" cy="32%" r="75%">
+            <stop offset="0%" stop-color="#FFF3B8"/>
+            <stop offset="45%" stop-color="#F2C744"/>
+            <stop offset="100%" stop-color="#C8901A"/>
+          </radialGradient>
+        </defs>
+        <!-- Heiligenschein -->
+        <ellipse class="heiligenschein" cx="150" cy="58" rx="62" ry="15"/>
+        <!-- Cookie -->
+        <circle cx="150" cy="170" r="98" fill="url(#gold-teig)" stroke="#8A5E12" stroke-width="5"/>
+        <g fill="#9A6614">
+          <ellipse cx="114" cy="128" rx="13" ry="10" transform="rotate(-20 114 128)"/>
+          <ellipse cx="172" cy="118" rx="10" ry="8"/>
+          <ellipse cx="146" cy="168" rx="12" ry="10"/>
+          <ellipse cx="200" cy="168" rx="13" ry="11" transform="rotate(25 200 168)"/>
+          <ellipse cx="108" cy="190" rx="12" ry="9" transform="rotate(15 108 190)"/>
+          <ellipse cx="165" cy="216" rx="14" ry="10" transform="rotate(-25 165 216)"/>
+          <ellipse cx="122" cy="232" rx="8" ry="7"/>
+          <ellipse cx="204" cy="222" rx="8" ry="7"/>
+        </g>
+        <g fill="#FFF8DC">
+          <circle cx="131" cy="114" r="3"/><circle cx="183" cy="146" r="2.5"/>
+          <circle cx="98" cy="158" r="2"/><circle cx="168" cy="186" r="2.5"/><circle cx="125" cy="140" r="2"/>
+        </g>
+        <!-- Funkeln -->
+        <g class="funkeln" fill="#FFF4C2">
+          <path d="M58 98 l5 15 15 5 -15 5 -5 15 -5 -15 -15 -5 15 -5z"/>
+          <path d="M240 90 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z"/>
+          <path d="M50 218 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/>
+          <path d="M252 200 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5z"/>
+          <path d="M190 52 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/>
+        </g>
+      </svg>
+    </div>
+    <p class="erleuchtung-satz">Dies ist der Cookie der Erleuchtung!</p>
+    <p class="erleuchtung-zusatz">Ab sofort bist du damit gesegnet!</p>
+    <button id="erleuchtung-weiter" class="erleuchtung-knopf" type="button">Weiter</button>
+  </dialog>
+  <script src="/static/js/gemeinsam.js"></script>
+  <script src="/static/js/infotafel.js"></script>
+  <script src="/static/js/spiel.js"></script>
+</body>
+</html>
